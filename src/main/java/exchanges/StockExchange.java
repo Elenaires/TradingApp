@@ -1,3 +1,8 @@
+package exchanges;
+
+import exceptions.InsufficientUnitsException;
+import exceptions.InvalidCodeException;
+
 import java.math.BigDecimal;
 import java.util.*;
 

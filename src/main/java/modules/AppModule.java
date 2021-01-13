@@ -1,5 +1,9 @@
+package modules;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import exchanges.StockExchange;
+
 
 public class AppModule extends AbstractModule {
 
@@ -15,15 +19,15 @@ public class AppModule extends AbstractModule {
     }
 
     /*@Provides
-    public Exchange provideExchange() {
+    public exchanges.Exchange provideExchange() {
         System.out.println("provideExchange:" + exchange);
-        Exchange ex = null;
+        exchanges.Exchange ex = null;
         switch(exchange) {
             case "ASX":
-                ex = new Asx();
+                ex = new exchanges.Asx();
                 break;
             case "CXA":
-                ex = new Cxa();
+                ex = new exchanges.Cxa();
                 break;
         }
         return ex;

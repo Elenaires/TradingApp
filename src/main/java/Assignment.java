@@ -1,6 +1,11 @@
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import enums.Stock;
+import exceptions.InsufficientUnitsException;
+import exceptions.InvalidCodeException;
+import exchanges.StockExchange;
+import modules.AppModule;
 
 import java.math.BigDecimal;
 import java.util.Map;

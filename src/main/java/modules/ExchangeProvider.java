@@ -1,4 +1,9 @@
+package modules;
+
 import com.google.inject.Provider;
+import exchanges.Asx;
+import exchanges.Cxa;
+import exchanges.StockExchange;
 
 public class ExchangeProvider implements Provider<StockExchange> {
 
