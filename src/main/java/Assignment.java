@@ -21,14 +21,29 @@ public class Assignment {
     }
 
     public static void main(String[] args) {
+        if(args.length == 0) {
+            System.out.println("no input parameter");
+            System.exit(1);
+        }
 
         String exchange = args[args.length - 1];
-        //String exchange = "CXA";
-        System.out.println(exchange);
+
         Injector injector = Guice.createInjector(new AppModule(exchange));
 
         Assignment assignment = injector.getInstance(Assignment.class);
         assignment.trade();
+        assignment.displayOutcome();
+    }
+
+    public void displayOutcome() {
+        Map<String, Integer> remainingStocks = stockExchange.getOrderBookTotalVolume();
+        BigDecimal income = stockExchange.getTradingCosts();
+
+        System.out.println("Income is: " + income.toString());
+        System.out.println("Remaining stock volume: ");
+        for(Map.Entry<String, Integer> entry : remainingStocks.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
     public void trade() {
@@ -60,15 +75,6 @@ public class Assignment {
                     System.out.println(e.getMessage());
                 }
             }
-        }
-
-        Map<String, Integer> remainingStocks = stockExchange.getOrderBookTotalVolume();
-        BigDecimal income = stockExchange.getTradingCosts();
-
-        System.out.println("Income is: " + income.toString());
-        System.out.println("Remaining stock volume: ");
-        for(Map.Entry<String, Integer> entry : remainingStocks.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }

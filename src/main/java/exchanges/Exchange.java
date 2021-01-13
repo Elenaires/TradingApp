@@ -2,6 +2,8 @@ package exchanges;
 
 import exceptions.InsufficientUnitsException;
 import exceptions.InvalidCodeException;
+import utils.FileIO;
+import utils.IO;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -11,14 +13,21 @@ public abstract class Exchange implements StockExchange {
 
     private Map<String, Integer> stocks = new HashMap<>();
     private BigDecimal income = new BigDecimal("0");
+    private IO io;
 
     public Exchange() {
-        stocks.put("NAB", 0);
-        stocks.put("CBA", 0);
-        stocks.put("QAN", 0);
+        io = new FileIO();
+        String exchangeName = getExchangeName();
+        if(exchangeName.equals("ASX")) {
+            loadFile("ASX", stocks);
+        }
+        else {
+            loadFile("CXA", stocks);
+        }
     }
 
     protected abstract BigDecimal getCharge();
+    protected abstract String getExchangeName();
 
     public void buy(String code, Integer units) throws InsufficientUnitsException,
             InvalidCodeException {
@@ -28,7 +37,6 @@ public abstract class Exchange implements StockExchange {
         if(stocks.get(code) < units) {
             throw new InsufficientUnitsException("Insufficient units.");
         }
-
         stocks.put(code, stocks.get(code) - units);
         income = income.add(getCharge());
     }
@@ -42,10 +50,27 @@ public abstract class Exchange implements StockExchange {
     }
 
     public Map<String, Integer> getOrderBookTotalVolume() {
-        return stocks;
+        return new HashMap<String, Integer>(stocks);
     }
 
     public BigDecimal getTradingCosts() {
-        return income;
+        return new BigDecimal(income.toString());
+    }
+
+    private void loadFile(String fileName, Map<String, Integer> stocks) {
+        io.readFile(fileName, stocks);
+    }
+
+    private void writeFile() {
+        String outString = toString();
+        io.writeFile(outString, getExchangeName());
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<String, Integer> entry : stocks.entrySet()) {
+            sb.append(entry.getKey() + ": " + entry.getValue());
+        }
+        return sb.toString();
     }
 }

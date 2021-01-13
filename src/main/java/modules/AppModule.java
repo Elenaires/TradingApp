@@ -1,7 +1,6 @@
 package modules;
-
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import exchanges.StockExchange;
 
 
@@ -15,21 +14,6 @@ public class AppModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(StockExchange.class).toProvider(new ExchangeProvider(exchange));
+        bind(StockExchange.class).toProvider(new ExchangeProvider(exchange)).in(Singleton.class);
     }
-
-    /*@Provides
-    public exchanges.Exchange provideExchange() {
-        System.out.println("provideExchange:" + exchange);
-        exchanges.Exchange ex = null;
-        switch(exchange) {
-            case "ASX":
-                ex = new exchanges.Asx();
-                break;
-            case "CXA":
-                ex = new exchanges.Cxa();
-                break;
-        }
-        return ex;
-    }*/
 }
