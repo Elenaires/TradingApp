@@ -1,6 +1,6 @@
 /*
-*   Class name: InsufficientUnitsException
-*   PURPOSE: Custom exception to handle attempts to buy stock when insufficient volume is available
+ *   Class name: InsufficientUnitsException
+ *   PURPOSE: Custom exception to handle attempts to buy stock when insufficient volume is available
  */
 
 package exceptions;

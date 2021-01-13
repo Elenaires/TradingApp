@@ -1,6 +1,6 @@
 /*
-*   Class name: IO
-*   PURPOSE: Interface containing behaviors of input output
+ *   Class name: IO
+ *   PURPOSE: Interface containing behaviors of input output
  */
 
 package utils;

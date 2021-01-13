@@ -1,6 +1,6 @@
 /*
-*   Class name: Assignment
-*   PURPOSE: Contains main(), the starting point of the program
+ *   Class name: Assignment
+ *   PURPOSE: Contains main(), the starting point of the program
  */
 
 import com.google.inject.Guice;
@@ -55,7 +55,7 @@ public class Assignment {
     /* Buy and sell stock a random number of units of the stock codes a random number of times */
     public void trade() {
         Random rnd = new Random();
-        int numTimes = /*rnd.nextInt(10);*/ 10;
+        int numTimes = rnd.nextInt(10);
         boolean buy = false;
         int numUnits = 0;
         String stock = "";

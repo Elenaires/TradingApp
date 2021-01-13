@@ -1,7 +1,7 @@
 /*
-*   Class name: Stock
-*   PURPOSE: An enumeration of stock types
-*/
+ *   Class name: Stock
+ *   PURPOSE: An enumeration of stock types
+ */
 
 package enums;
 

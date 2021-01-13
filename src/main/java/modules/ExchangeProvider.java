@@ -1,6 +1,6 @@
 /*
-*   Class name: ExchangeProvider
-*   PURPOSE: Contains the logic of implementation selection for StockExchange at runtime
+ *   Class name: ExchangeProvider
+ *   PURPOSE: Contains the logic of implementation selection for StockExchange at runtime
  */
 
 package modules;

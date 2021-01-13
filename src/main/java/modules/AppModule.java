@@ -1,6 +1,6 @@
 /*
-*   Class name: AppModule
-*   PURPOSE: Bind IO class to its implementation
+ *   Class name: AppModule
+ *   PURPOSE: Bind IO class to its implementation
  */
 
 package modules;

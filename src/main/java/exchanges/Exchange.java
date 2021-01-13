@@ -1,7 +1,7 @@
 /*
  *  Class name : Exchange
  *  PURPOSE: Abstract container class for Exchange, implements StockExchange interface
-*/
+ */
 
 package exchanges;
 
@@ -40,7 +40,6 @@ public abstract class Exchange implements StockExchange {
 
     public void buy(String code, Integer units) throws InsufficientUnitsException,
             InvalidCodeException {
-        System.out.println("buy " + code + " : " + units);
         if(!stocks.containsKey(code)) {
             throw new InvalidCodeException("Invalid stock code.");
         }
@@ -54,7 +53,6 @@ public abstract class Exchange implements StockExchange {
     }
 
     public void sell(String code, Integer units) throws InvalidCodeException {
-        System.out.println("sell " + code + " : " + units);
         if(!stocks.containsKey(code)) {
             throw new InvalidCodeException("Invalid stock code.");
         }
@@ -80,7 +78,6 @@ public abstract class Exchange implements StockExchange {
     /* Write stock volume to file (exchange_volume) */
     private void writeVolumeToFile() {
         String outString = toString();
-        System.out.println(outString);
         String fileName = getExchangeName() + "_volume";
         io.writeFile(outString, fileName, false);
     }

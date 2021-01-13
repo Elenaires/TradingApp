@@ -1,6 +1,6 @@
 /*
-*   Class name: StockExchangeModule
-*   PURPOSE: Bind StockExchange to its implementation
+ *   Class name: StockExchangeModule
+ *   PURPOSE: Bind StockExchange to its implementation
  */
 
 package modules;

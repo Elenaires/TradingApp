@@ -1,6 +1,6 @@
 /*
-*   Class name: FileIO
-*   PURPOSE: Perform read and write to/from file
+ *   Class name: FileIO
+ *   PURPOSE: Perform read and write to/from file
  */
 
 package utils;
@@ -14,7 +14,7 @@ public class FileIO implements IO {
     /* Read from file and restore state of stock volume and income if file exists
     *  Populate the given stocks map with 0 for each stock if file does not exist
     *  Return income of the exchange
-     */
+    */
     public BigDecimal readFile(String file, Map<String, Integer> stocks) {
         FileInputStream fileStrm = null;
         InputStreamReader rdr;
