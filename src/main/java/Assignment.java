@@ -62,13 +62,11 @@ public class Assignment {
 
         for(int i = 0; i < numTimes; i++) {
             buy = rnd.nextBoolean();
-
             do { // assumption: numUnits must not be 0
                 numUnits = rnd.nextInt(10);
             } while (numUnits == 0);
 
             stock = Stock.getRandomStock().getName();
-
             if(buy) {
                 try {
                     stockExchange.buy(stock, numUnits);
@@ -76,7 +74,6 @@ public class Assignment {
                 catch (InsufficientUnitsException | InvalidCodeException e) {
                     System.out.println(e.getMessage());
                 }
-
             }
             else {
                 try {

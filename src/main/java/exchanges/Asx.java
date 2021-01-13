@@ -10,13 +10,15 @@ import java.math.BigDecimal;
 
 public class Asx extends Exchange {
 
+    private BigDecimal charge = new BigDecimal("0.07");
+
     public Asx(IO io) {
         super(io);
     }
 
     @Override
     public BigDecimal getCharge() {
-        return new BigDecimal("7");
+        return charge;
     }
 
     @Override
