@@ -11,9 +11,9 @@ import java.util.Map;
 
 public abstract class Exchange implements StockExchange {
 
-    private Map<String, Integer> stocks = new HashMap<>();
-    private BigDecimal income = new BigDecimal("0");
-    private IO io;
+    private final Map<String, Integer> stocks = new HashMap<>();
+    private BigDecimal income = null;
+    private final IO io;
 
     public Exchange() {
         io = new FileIO();
@@ -31,6 +31,7 @@ public abstract class Exchange implements StockExchange {
 
     public void buy(String code, Integer units) throws InsufficientUnitsException,
             InvalidCodeException {
+        System.out.println("buy " + code + " : " + units);
         if(!stocks.containsKey(code)) {
             throw new InvalidCodeException("Invalid stock code.");
         }
@@ -39,18 +40,21 @@ public abstract class Exchange implements StockExchange {
         }
         stocks.put(code, stocks.get(code) - units);
         income = income.add(getCharge());
+        writeFile();
     }
 
     public void sell(String code, Integer units) throws InvalidCodeException {
+        System.out.println("sell " + code + " : " + units);
         if(!stocks.containsKey(code)) {
             throw new InvalidCodeException("Invalid stock code.");
         }
         stocks.put(code, stocks.get(code) + units);
         income = income.add(getCharge());
+        writeFile();
     }
 
     public Map<String, Integer> getOrderBookTotalVolume() {
-        return new HashMap<String, Integer>(stocks);
+        return new HashMap<>(stocks);
     }
 
     public BigDecimal getTradingCosts() {
@@ -58,18 +62,19 @@ public abstract class Exchange implements StockExchange {
     }
 
     private void loadFile(String fileName, Map<String, Integer> stocks) {
-        io.readFile(fileName, stocks);
+        income = io.readFile(fileName, stocks);
     }
 
     private void writeFile() {
         String outString = toString();
+        System.out.println(outString);
         io.writeFile(outString, getExchangeName());
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(income.toString() + "\n");
         for(Map.Entry<String, Integer> entry : stocks.entrySet()) {
-            sb.append(entry.getKey() + ": " + entry.getValue());
+            sb.append(entry.getKey() + ":" + entry.getValue() + "\n");
         }
         return sb.toString();
     }

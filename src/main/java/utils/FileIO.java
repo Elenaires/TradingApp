@@ -1,14 +1,16 @@
 package utils;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class FileIO implements IO {
-    public void readFile(String file, Map<String, Integer> stocks) {
+    public BigDecimal readFile(String file, Map<String, Integer> stocks) {
         FileInputStream fileStrm = null;
         InputStreamReader rdr;
         BufferedReader bufRdr;
         String line = "";
+        BigDecimal income = new BigDecimal("0");
 
         try {
             fileStrm = new FileInputStream(file);
@@ -16,9 +18,11 @@ public class FileIO implements IO {
             bufRdr = new BufferedReader(rdr);
 
             line = bufRdr.readLine();
+            income = new BigDecimal(line);
+            line = bufRdr.readLine();
 
-            while(line != null) {
-                String[] lines = line.split(": ");
+            while(line != null && !line.isEmpty()) {
+                String[] lines = line.split(":");
                 stocks.put(lines[0], Integer.parseInt(lines[1]));
                 line = bufRdr.readLine();
             }
@@ -39,6 +43,7 @@ public class FileIO implements IO {
             stocks.put("CBA", 0);
             stocks.put("QAN", 0);
         }
+        return income;
     }
 
     public void writeFile(String outString, String fileName) {
@@ -50,6 +55,7 @@ public class FileIO implements IO {
             fileStrm = new FileOutputStream(fileName);
             output = new PrintWriter(fileStrm);
 
+            output.println(outString);
             output.close();
             fileStrm.close();
         }
