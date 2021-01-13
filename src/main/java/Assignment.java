@@ -1,35 +1,32 @@
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.sun.xml.internal.ws.server.DefaultResourceInjector;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Random;
 
 public class Assignment {
+
+    private StockExchange stockExchange;
+
+    @Inject
+    public Assignment(StockExchange exchange) {
+        stockExchange = exchange;
+    }
+
     public static void main(String[] args) {
 
         String exchange = args[args.length - 1];
-        StockExchange stockExchange = null;
-        Injector injector = Guice.createInjector();
-        /* Injector injector = Guice.createInjector();
+        //String exchange = "CXA";
+        System.out.println(exchange);
+        Injector injector = Guice.createInjector(new AppModule(exchange));
 
-        Assignment assignment = injector.getInstance(Assignment.class);*/
-
-        if(exchange.equals("ASX")) {
-           // stockExchange = injector.getInstance(Key.get(StockExchange.class, ASX.class));
-            stockExchange = new ASX();
-        }
-        else if(exchange.equals("CXA")) {
-          //  stockExchange = injector.getInstance(Key.get(StockExchange.class, CXA.class));
-            stockExchange = new CXA();
-        }
-
-        trade(stockExchange);
+        Assignment assignment = injector.getInstance(Assignment.class);
+        assignment.trade();
     }
 
-    public static void trade(StockExchange stockExchange) {
+    public void trade() {
         Random rnd = new Random();
         int numTimes = /*rnd.nextInt(10);*/ 10;
         boolean buy = false;
