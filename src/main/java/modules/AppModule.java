@@ -1,4 +1,10 @@
+/*
+*   Class name: AppModule
+*   PURPOSE: Bind IO class to its implementation
+ */
+
 package modules;
+
 import com.google.inject.AbstractModule;
 import utils.FileIO;
 import utils.IO;

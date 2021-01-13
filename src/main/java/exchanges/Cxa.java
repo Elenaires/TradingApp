@@ -1,7 +1,11 @@
+/*
+ *  Class name : Cxa
+ *  PURPOSE: Concrete class of Exchange
+ */
+
 package exchanges;
 
 import utils.IO;
-
 import java.math.BigDecimal;
 
 public class Cxa extends Exchange {

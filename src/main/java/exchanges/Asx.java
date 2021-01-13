@@ -1,6 +1,11 @@
-package exchanges;
-import utils.IO;
+/*
+ *  Class name : Asx
+ *  PURPOSE: Concrete class of Exchange
+ */
 
+package exchanges;
+
+import utils.IO;
 import java.math.BigDecimal;
 
 public class Asx extends Exchange {

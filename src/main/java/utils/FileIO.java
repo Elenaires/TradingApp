@@ -1,3 +1,8 @@
+/*
+*   Class name: FileIO
+*   PURPOSE: Perform read and write to/from file
+ */
+
 package utils;
 
 import java.io.*;
@@ -5,6 +10,11 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class FileIO implements IO {
+
+    /* Read from file and restore state of stock volume and income if file exists
+    *  Populate the given stocks map with 0 for each stock if file does not exist
+    *  Return income of the exchange
+     */
     public BigDecimal readFile(String file, Map<String, Integer> stocks) {
         FileInputStream fileStrm = null;
         InputStreamReader rdr;
@@ -17,10 +27,12 @@ public class FileIO implements IO {
             rdr = new InputStreamReader(fileStrm);
             bufRdr = new BufferedReader(rdr);
 
+            /* first line contains the income */
             line = bufRdr.readLine();
             income = new BigDecimal(line);
             line = bufRdr.readLine();
 
+            /* subsequent lines contain the stock volume */
             while(line != null && !line.isEmpty()) {
                 String[] lines = line.split(":");
                 stocks.put(lines[0], Integer.parseInt(lines[1]));
@@ -29,6 +41,7 @@ public class FileIO implements IO {
 
             fileStrm.close();
         }
+
         catch (IOException e) {
             if(fileStrm != null)
             {
@@ -46,6 +59,7 @@ public class FileIO implements IO {
         return income;
     }
 
+    /* Write to file */
     public void writeFile(String outString, String fileName, boolean append) {
         FileOutputStream fileStrm = null;
         PrintWriter output;

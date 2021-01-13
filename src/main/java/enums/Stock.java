@@ -1,3 +1,8 @@
+/*
+*   Class name: Stock
+*   PURPOSE: An enumeration of stock types
+*/
+
 package enums;
 
 import java.util.Random;

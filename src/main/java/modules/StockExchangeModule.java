@@ -1,3 +1,8 @@
+/*
+*   Class name: StockExchangeModule
+*   PURPOSE: Bind StockExchange to its implementation
+ */
+
 package modules;
 
 import com.google.inject.AbstractModule;

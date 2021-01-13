@@ -1,3 +1,8 @@
+/*
+*   Class name: Assignment
+*   PURPOSE: Contains main(), the starting point of the program
+ */
+
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -30,12 +35,12 @@ public class Assignment {
         String exchange = args[args.length - 1];
 
         Injector injector = Guice.createInjector(new AppModule(), new StockExchangeModule(exchange));
-
         Assignment assignment = injector.getInstance(Assignment.class);
         assignment.trade();
         assignment.displayOutcome();
     }
 
+    /* Print income and aggregated stock volume */
     public void displayOutcome() {
         Map<String, Integer> remainingStocks = stockExchange.getOrderBookTotalVolume();
         BigDecimal income = stockExchange.getTradingCosts();
@@ -47,6 +52,7 @@ public class Assignment {
         }
     }
 
+    /* Buy and sell stock a random number of units of the stock codes a random number of times */
     public void trade() {
         Random rnd = new Random();
         int numTimes = /*rnd.nextInt(10);*/ 10;
@@ -56,7 +62,11 @@ public class Assignment {
 
         for(int i = 0; i < numTimes; i++) {
             buy = rnd.nextBoolean();
-            numUnits = rnd.nextInt(10);
+
+            do { // assumption: numUnits must not be 0
+                numUnits = rnd.nextInt(10);
+            } while (numUnits == 0);
+
             stock = Stock.getRandomStock().getName();
 
             if(buy) {
@@ -79,9 +89,3 @@ public class Assignment {
         }
     }
 }
-
-/**
- Assumptions:
- 1) Buying/Selling 0 unit will be treated as a successful transaction and incur a fee
- 2) Unsuccessful transactions will not incur a fee
- **/
