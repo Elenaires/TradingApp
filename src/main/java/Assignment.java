@@ -6,6 +6,7 @@ import exceptions.InsufficientUnitsException;
 import exceptions.InvalidCodeException;
 import exchanges.StockExchange;
 import modules.AppModule;
+import modules.StockExchangeModule;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class Assignment {
 
         String exchange = args[args.length - 1];
 
-        Injector injector = Guice.createInjector(new AppModule(exchange));
+        Injector injector = Guice.createInjector(new AppModule(), new StockExchangeModule(exchange));
 
         Assignment assignment = injector.getInstance(Assignment.class);
         assignment.trade();

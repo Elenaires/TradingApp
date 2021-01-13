@@ -1,19 +1,13 @@
 package modules;
 import com.google.inject.AbstractModule;
-import com.google.inject.Singleton;
-import exchanges.StockExchange;
+import utils.FileIO;
+import utils.IO;
 
 
 public class AppModule extends AbstractModule {
 
-    final String exchange;
-
-    public AppModule(String exchange) {
-        this.exchange = exchange;
-    }
-
     @Override
     protected void configure() {
-        bind(StockExchange.class).toProvider(new ExchangeProvider(exchange)).in(Singleton.class);
-    }
+        bind(IO.class).to(FileIO.class);
+   }
 }

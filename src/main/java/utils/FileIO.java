@@ -46,13 +46,13 @@ public class FileIO implements IO {
         return income;
     }
 
-    public void writeFile(String outString, String fileName) {
+    public void writeFile(String outString, String fileName, boolean append) {
         FileOutputStream fileStrm = null;
         PrintWriter output;
 
         try
         {
-            fileStrm = new FileOutputStream(fileName);
+            fileStrm = new FileOutputStream(fileName, append);
             output = new PrintWriter(fileStrm);
 
             output.println(outString);

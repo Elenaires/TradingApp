@@ -2,7 +2,6 @@ package exchanges;
 
 import exceptions.InsufficientUnitsException;
 import exceptions.InvalidCodeException;
-import utils.FileIO;
 import utils.IO;
 
 import java.math.BigDecimal;
@@ -15,14 +14,14 @@ public abstract class Exchange implements StockExchange {
     private BigDecimal income = null;
     private final IO io;
 
-    public Exchange() {
-        io = new FileIO();
+    public Exchange(IO io) {
+        this.io = io;
         String exchangeName = getExchangeName();
         if(exchangeName.equals("ASX")) {
-            loadFile("ASX", stocks);
+            loadFile("ASX_volume", stocks);
         }
         else {
-            loadFile("CXA", stocks);
+            loadFile("CXA_volume", stocks);
         }
     }
 
@@ -40,7 +39,8 @@ public abstract class Exchange implements StockExchange {
         }
         stocks.put(code, stocks.get(code) - units);
         income = income.add(getCharge());
-        writeFile();
+        writeVolumeToFile();
+        writeLogToFile("buy", code, units);
     }
 
     public void sell(String code, Integer units) throws InvalidCodeException {
@@ -50,7 +50,8 @@ public abstract class Exchange implements StockExchange {
         }
         stocks.put(code, stocks.get(code) + units);
         income = income.add(getCharge());
-        writeFile();
+        writeVolumeToFile();
+        writeLogToFile("sell", code, units);
     }
 
     public Map<String, Integer> getOrderBookTotalVolume() {
@@ -65,16 +66,23 @@ public abstract class Exchange implements StockExchange {
         income = io.readFile(fileName, stocks);
     }
 
-    private void writeFile() {
+    private void writeVolumeToFile() {
         String outString = toString();
         System.out.println(outString);
-        io.writeFile(outString, getExchangeName());
+        String fileName = getExchangeName() + "_volume";
+        io.writeFile(outString, fileName, false);
+    }
+
+    private void writeLogToFile(String trade, String code, int units) {
+        String outString = trade + "," + code + "," + units;
+        String fileName = getExchangeName() + "_logger";
+        io.writeFile(outString, fileName, true);
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder(income.toString() + "\n");
         for(Map.Entry<String, Integer> entry : stocks.entrySet()) {
-            sb.append(entry.getKey() + ":" + entry.getValue() + "\n");
+            sb.append(entry.getKey()).append(":").append(entry.getValue()).append("\n");
         }
         return sb.toString();
     }
