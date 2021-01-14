@@ -18,10 +18,11 @@ public abstract class Exchange implements StockExchange {
     private final Map<String, Integer> stocks = new HashMap<>();
     private BigDecimal income = null;
     private final IO io;
+    private final String exchangeName;
 
-    public Exchange(IO io) {
+    public Exchange(IO io, String exchangeName) {
         this.io = io;
-        String exchangeName = getExchangeName();
+        this.exchangeName = exchangeName;
 
         // load existing file if exists to restore state from previous execution
         if(exchangeName.equals("ASX")) {
@@ -35,9 +36,7 @@ public abstract class Exchange implements StockExchange {
     /* Get trade charge of exchange */
     protected abstract BigDecimal getCharge();
 
-    /* Get name of exchange */
-    protected abstract String getExchangeName();
-
+    /* Buy stock */
     public void buy(String code, Integer units) throws InsufficientUnitsException,
             InvalidCodeException {
         if(!stocks.containsKey(code)) {
@@ -52,6 +51,7 @@ public abstract class Exchange implements StockExchange {
         writeActivityToFile("buy", code, units);
     }
 
+    /* Sell stock */
     public void sell(String code, Integer units) throws InvalidCodeException {
         if(!stocks.containsKey(code)) {
             throw new InvalidCodeException("Invalid stock code.");
@@ -62,10 +62,12 @@ public abstract class Exchange implements StockExchange {
         writeActivityToFile("sell", code, units);
     }
 
+    /* Report aggregate volume available for each code */
     public Map<String, Integer> getOrderBookTotalVolume() {
         return new HashMap<>(stocks);
     }
 
+    /* Returns dollar value of trading activity */
     public BigDecimal getTradingCosts() {
         return income;
     }
@@ -78,14 +80,14 @@ public abstract class Exchange implements StockExchange {
     /* Write stock volume to file (exchange_volume) */
     private void writeVolumeToFile() {
         String outString = toString();
-        String fileName = getExchangeName() + "_volume";
+        String fileName = exchangeName + "_volume";
         io.writeFile(outString, fileName, false);
     }
 
     /* Write trading activity to file (exchange_logger) */
     private void writeActivityToFile(String trade, String code, int units) {
         String outString = trade + "," + code + "," + units;
-        String fileName = getExchangeName() + "_logger";
+        String fileName = exchangeName + "_logger";
         io.writeFile(outString, fileName, true);
     }
 

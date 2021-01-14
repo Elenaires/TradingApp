@@ -13,16 +13,11 @@ public class Asx extends Exchange {
     private BigDecimal charge = new BigDecimal("0.07");
 
     public Asx(IO io) {
-        super(io);
+        super(io, "ASX");
     }
 
     @Override
     public BigDecimal getCharge() {
         return charge;
-    }
-
-    @Override
-    protected String getExchangeName() {
-        return "ASX";
     }
 }

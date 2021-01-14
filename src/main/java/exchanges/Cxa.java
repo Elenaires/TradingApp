@@ -13,16 +13,11 @@ public class Cxa extends Exchange {
     private BigDecimal charge = new BigDecimal("0.05");
 
     public Cxa(IO io) {
-        super(io);
+        super(io, "CXA");
     }
 
     @Override
     public BigDecimal getCharge() {
         return charge;
-    }
-
-    @Override
-    protected String getExchangeName() {
-        return "CXA";
     }
 }

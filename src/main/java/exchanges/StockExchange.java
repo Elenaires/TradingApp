@@ -17,12 +17,12 @@ public interface StockExchange {
     void buy(String code, Integer units) throws InsufficientUnitsException,
             InvalidCodeException;
 
-     /* Sell stock */
+    /* Sell stock */
     void sell(String code, Integer units) throws InvalidCodeException;
 
-     /* Report aggregate volume available for each code */
+    /* Report aggregate volume available for each code */
     Map<String, Integer> getOrderBookTotalVolume();
 
-     /* Returns dollar value of trading activity */
+    /* Returns dollar value of trading activity */
     BigDecimal getTradingCosts();
 }
