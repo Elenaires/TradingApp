@@ -41,7 +41,7 @@ public class Assignment {
     }
 
     /* Print income and aggregated stock volume */
-    public void displayOutcome() {
+    private void displayOutcome() {
         Map<String, Integer> remainingStocks = stockExchange.getOrderBookTotalVolume();
         BigDecimal income = stockExchange.getTradingCosts();
 
@@ -53,7 +53,7 @@ public class Assignment {
     }
 
     /* Buy and sell stock a random number of units of the stock codes a random number of times */
-    public void trade() {
+    private void trade() {
         Random rnd = new Random();
         int numTimes = rnd.nextInt(10);
         boolean buy = false;
